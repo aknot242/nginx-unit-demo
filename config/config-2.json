@@ -1,0 +1,30 @@
+{
+  "listeners": {
+    "*:8242": {
+      "pass": "applications/python-app"
+    },
+    "*:8243": {
+      "pass": "applications/node-app"
+    }
+  },
+  "applications": {
+    "python-app": {
+      "type": "python 3",
+      "path": "/pythonapp/",
+      "module": "app",
+      "environment": {
+        "generation": "1"
+      }
+    },
+    "node-app": {
+      "type": "external",
+      "working_directory": "/nodeapp/",
+      "executable": "app.js",
+      "user": "root",
+      "processes": 1,
+      "environment": {
+        "generation": "1"
+      }
+    }
+  }
+}

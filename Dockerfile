@@ -13,7 +13,7 @@ RUN apt update && apt install -y python3-pip    \
 
 # add NGINX Unit and Node.js repos
 RUN apt update                                                             \
-    && apt install -y apt-transport-https gnupg1                           \
+    && apt install -y apt-transport-https gnupg1 procps                    \
     && curl https://nginx.org/keys/nginx_signing.key | apt-key add -       \
     && echo "deb https://packages.nginx.org/unit/debian/ stretch unit"     \
          > /etc/apt/sources.list.d/unit.list                               \

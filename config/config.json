@@ -1,41 +1,16 @@
 {
   "listeners": {
-    "*:8000": {
-      "pass": "routes"
+    "*:8242": {
+      "pass": "applications/python-app"
     }
   },
-  "routes": [
-    {
-      "match": {
-        "uri": "/admin/*"
-      },
-      "action": {
-        "pass": "applications/node-app"
-      }
-    },
-    {
-      "action": {
-        "pass": "applications/python-app"
-      }
-    }
-  ],
   "applications": {
     "python-app": {
       "type": "python 3",
       "path": "/pythonapp/",
       "module": "app",
       "environment": {
-        "generation": "7"
-      }
-    },
-    "node-app": {
-      "type": "external",
-      "working_directory": "/nodeapp/",
-      "executable": "app.js",
-      "user": "root",
-      "processes": 5,
-      "environment": {
-        "generation": "10"
+        "generation": "1"
       }
     }
   }

@@ -10,12 +10,12 @@ docker build --tag=unit-webapp .
 
 ### run
 ```
-export UNIT=$(docker run -d --mount type=bind,src="$(pwd)/config/config.json",dst=/config/config.json \
+export UNIT=$(docker run -d --mount type=bind,src="$(pwd)/config",dst=/config \
                        --mount type=bind,src="$(pwd)/log/unit.log",dst=/var/log/unit.log \
                        --mount type=bind,src="$(pwd)/state",dst=/var/lib/unit \
                        --mount type=bind,src="$(pwd)/pythonapp",dst=/pythonapp \
                        --mount type=bind,src="$(pwd)/nodeapp",dst=/nodeapp \
-                                   -p 8242:8000 unit-webapp)
+                                   -p 8242:8242 -p 8243:8243 unit-webapp)
 ```
 
 ### config 
@@ -36,6 +36,11 @@ If you need to make a configuration change, update the [config/config.json](conf
 ### open a bash shell into container if needed
 ```
 docker exec -ti $UNIT bash
+```
+
+### in container, to see running processes
+```
+ps aufx
 ```
 
 ### removing and cleaning up existing containers and images
