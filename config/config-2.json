@@ -13,7 +13,7 @@
       "path": "/pythonapp/",
       "module": "app",
       "environment": {
-        "generation": "1"
+        "APP_VERSION": "1.0"
       }
     },
     "node-app": {
@@ -23,7 +23,7 @@
       "user": "root",
       "processes": 1,
       "environment": {
-        "generation": "1"
+        "APP_VERSION": "1.0"
       }
     }
   }
