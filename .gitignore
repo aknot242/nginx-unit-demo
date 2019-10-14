@@ -1,4 +1,5 @@
 nodeapp/node_modules/
 unit.log
-state
+state/certs
+state/conf.json
 __pycache__
