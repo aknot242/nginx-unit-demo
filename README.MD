@@ -11,7 +11,7 @@ docker build --tag=unit-webapp .
 ### Run
 ```
 export UNIT=$(docker run -d --mount type=bind,src="$(pwd)/config",dst=/config \
-                       --mount type=bind,src="$(pwd)/log/unit.log",dst=/var/log/unit.log \
+                       --mount type=bind,src="$(pwd)/log",dst=/var/log \
                        --mount type=bind,src="$(pwd)/state",dst=/var/lib/unit \
                        --mount type=bind,src="$(pwd)/pythonapp",dst=/pythonapp \
                        --mount type=bind,src="$(pwd)/nodeapp",dst=/nodeapp \
@@ -26,11 +26,26 @@ docker exec -ti $UNIT curl -X PUT --data-binary @/config/config.json http://loca
 ```
 
 ### Demo Flow
-- navigate to the python flask app at http://localhost:8242
-- navigate to the node express app at http://localhost:8242/admin/
-- navigate to the running unit config fetched by node express at http://localhost:8242/admin/config
+- Once the container is up, apply the initial configuration in [config/config.json](config/config.json) using the following command:
+```
+docker exec -ti $UNIT curl -X PUT --data-binary @/config/config.json http://localhost:9090/config
+```
+- Navigate to the python flask app at http://localhost:8242 to show that it exists and is taking requests.
+- Introduce the node express app by applying the configuration in [config/config-2.json](config/config-2.json) using the following command:
+```
+docker exec -ti $UNIT curl -X PUT --data-binary @/config/config-2.json http://localhost:9090/config
+```
+- Navigate to the node express app at http://localhost:8243/admin/
+- Show that the python flask app is still running at http://localhost:8242
+- Apply a new configuration in [config/config-3.json](config/config-3.json) which demonstrates the 2 applications running on a single port (leveraging routes) with the following command:
+```
+docker exec -ti $UNIT curl -X PUT --data-binary @/config/config-3.json http://localhost:9090/config
+```
+- Show the python flask app at http://localhost:8242 as well as the node express app at http://localhost:8242/admin/
+- Navigate to the running unit config fetched by node express at http://localhost:8242/admin/config
+- The application of [config/config-3.json](config/config-3.json) introduces the concept of scaling processes per application. Use the instructions in the *Supplemental* section below to highlight that there are now 4 node processes running as a result of applying this configuration.
 
-If you need to make a configuration change, update json config file of your choosing then run the docker exec command in the "config" section above.
+Note: If you need to make a configuration change of your own creation, update json config file of your choosing then run the docker exec command in the "config" section above.
 
 
 ## Supplemental
@@ -40,7 +55,7 @@ Open a bash shell into container if needed
 docker exec -ti $UNIT bash
 ```
 
-In the Docker container, use the [ps](http://man7.org/linux/man-pages/man1/ps.1.html) command to see running processes running on the system with additional information. FOr example, if using [config/config-3.json](config/config-3.json), there should be 4 node processes, and only 1 python process active.
+In the Docker container, use the [ps](http://man7.org/linux/man-pages/man1/ps.1.html) command to see running processes running on the system with additional information. For example, if using [config/config-3.json](config/config-3.json), there should be 4 node processes, and only 1 python process active.
 ```
 ps aufx
 ```
