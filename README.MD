@@ -1,5 +1,7 @@
 # NGINX Unit Multi-App Demo
 
+## NOTE: As NGINX Unit no longer receives new features or enhancements from the project maintainers, this repository is now archived.
+
 ### Requirements
 - [Docker Desktop](https://www.docker.com/products/docker-desktop) or [Docker Engine](https://www.docker.com/products/container-runtime)
 
